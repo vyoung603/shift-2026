@@ -1,0 +1,12 @@
+{
+  "name": "SM Shift 2026",
+  "short_name": "Shift 2026",
+  "start_url": "/shift-2026/",
+  "display": "standalone",
+  "background_color": "#004455",
+  "theme_color": "#004455",
+  "icons": [
+    { "src": "/shift-2026/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/shift-2026/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
