@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AuthProvider, useAuth } from "@/lib/auth-context";
 import { DataProvider } from "@/lib/data-context";
 import AuthGate from "@/components/AuthGate";
 import BottomNav from "@/components/BottomNav";
@@ -11,26 +10,29 @@ import AgendaPage from "@/components/AgendaPage";
 import FaqPage from "@/components/FaqPage";
 import ExplorePage from "@/components/ExplorePage";
 import AboutPage from "@/components/AboutPage";
+import InstallBanner from "@/components/InstallBanner";
 
 function AppShell() {
-  const { authed, loading } = useAuth();
+  const [entered, setEntered] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("shift_entered") === "true";
+    }
+    return false;
+  });
   const [tab, setTab] = useState("home");
 
-  if (loading) {
-    return (
-      <div className="min-h-dvh flex items-center justify-center bg-cream">
-        <div className="w-8 h-8 border-3 border-lake border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+  if (!entered) {
+    return <AuthGate onEnter={() => { setEntered(true); sessionStorage.setItem("shift_entered", "true"); }} />;
   }
-
-  if (!authed) return <AuthGate />;
 
   return (
     <div className="min-h-dvh bg-cream pb-20">
-      <header className="bg-lake text-white px-4 py-2.5 flex items-center sticky top-0 z-40">
-        <ShiftLogo className="h-8 w-auto" />
-      </header>
+      <div className="sticky top-0 z-40">
+        <InstallBanner />
+        <header className="bg-lake text-white px-4 py-2.5 pt-[calc(env(safe-area-inset-top)+10px)] flex items-center">
+          <ShiftLogo className="h-8 w-auto" />
+        </header>
+      </div>
 
       <main>
         {tab === "home" && <HomePage />}
@@ -48,9 +50,7 @@ function AppShell() {
 export default function Page() {
   return (
     <DataProvider>
-      <AuthProvider>
-        <AppShell />
-      </AuthProvider>
+      <AppShell />
     </DataProvider>
   );
 }

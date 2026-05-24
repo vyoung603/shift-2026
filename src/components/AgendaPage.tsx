@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useData } from "@/lib/data-context";
-import { downloadIcs } from "@/lib/ics";
+import { openCalendar } from "@/lib/ics";
 import { AgendaItem } from "@/lib/sheets";
 
 const DAYS = ["Tuesday", "Wednesday", "Thursday"];
@@ -47,7 +47,7 @@ function AgendaCard({ item, expanded, onToggle, hideTime }: {
           {item.description && <p className="text-sm text-bark leading-relaxed mb-3">{item.description}</p>}
           <div className="flex gap-2">
             <span
-              onClick={(e) => { e.stopPropagation(); downloadIcs(item); }}
+              onClick={(e) => { e.stopPropagation(); openCalendar(item); }}
               className="inline-flex items-center gap-1 text-sm font-semibold text-bright-teal bg-sky px-3 py-2 rounded-lg cursor-pointer active:opacity-70"
             >
               📅 Add to Calendar

@@ -4,10 +4,10 @@ import { useData } from "@/lib/data-context";
 import ShiftLogo from "./ShiftLogo";
 
 const WEEK = [
-  { day: "Monday", date: "May 18", label: "Travel Day", desc: "Arrive in Dallas, optional team dinners" },
-  { day: "Tuesday", date: "May 19", label: "Foundation", desc: "Product deep-dives, volunteering" },
-  { day: "Wednesday", date: "May 20", label: "Experience", desc: "Panels, AI workshop, leadership Q&A" },
-  { day: "Thursday", date: "May 21", label: "Skills & Celebration", desc: "Workshops, team time, all-company party" },
+  { day: "Monday", date: "May 18", label: "Travel Day", desc: "Arrive in Dallas and get settled at the Omni Las Colinas" },
+  { day: "Tuesday", date: "May 19", label: "Foundation", desc: "CEO welcome, product deep-dive, volunteering with Soldier's Angels, welcome reception" },
+  { day: "Wednesday", date: "May 20", label: "Experience", desc: "Provider & client panel, C-Suite fireside chat, hands-on AI workshop, department events" },
+  { day: "Thursday", date: "May 21", label: "Skills & Celebration", desc: "Choose-your-own workshops, team time, Impact Awards, all-company celebration" },
   { day: "Friday", date: "May 22", label: "Depart", desc: "Safe travels home" },
 ];
 

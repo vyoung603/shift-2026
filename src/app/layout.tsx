@@ -15,13 +15,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SM Shift 2026",
+  title: "SM Shift",
   description: "SonderMind Shift 2026 — May 18-22, Dallas TX",
   manifest: "/shift-2026/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Shift 2026",
+    title: "SM Shift",
   },
 };
 
@@ -30,6 +30,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: "cover",
   themeColor: "#004455",
 };
 

@@ -2,7 +2,7 @@ import { AgendaItem } from "./sheets";
 
 function pad(n: number) { return n.toString().padStart(2, "0"); }
 
-function toIcsDate(dateStr: string, timeStr: string): string {
+function toGcalDate(dateStr: string, timeStr: string): string {
   const d = new Date(dateStr);
   const [time, period] = timeStr.split(" ");
   const [hStr, mStr] = time.split(":");
@@ -13,34 +13,21 @@ function toIcsDate(dateStr: string, timeStr: string): string {
   return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(h)}${pad(m)}00`;
 }
 
-export function generateIcs(item: AgendaItem): string {
-  const dtStart = toIcsDate(item.date, item.startTime);
-  const dtEnd = toIcsDate(item.date, item.endTime);
-  const desc = [item.description, item.speaker ? `Speaker: ${item.speaker}` : ""]
-    .filter(Boolean).join("\\n");
+export function openCalendar(item: AgendaItem) {
+  const start = toGcalDate(item.date, item.startTime);
+  const end = toGcalDate(item.date, item.endTime);
+  const details = [item.description, item.speaker ? `Speaker: ${item.speaker}` : ""]
+    .filter(Boolean).join("\n");
+  const location = `Omni Las Colinas${item.room ? ` - ${item.room}` : ""}`;
 
-  return [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//SM Shift 2026//EN",
-    "BEGIN:VEVENT",
-    `DTSTART:${dtStart}`,
-    `DTEND:${dtEnd}`,
-    `SUMMARY:${item.title}`,
-    `DESCRIPTION:${desc}`,
-    `LOCATION:Omni Las Colinas${item.room ? ` - ${item.room}` : ""}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
-}
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: item.title,
+    dates: `${start}/${end}`,
+    details,
+    location,
+    ctz: "America/Chicago",
+  });
 
-export function downloadIcs(item: AgendaItem) {
-  const ics = generateIcs(item);
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${item.title.replace(/[^a-zA-Z0-9]/g, "-")}.ics`;
-  a.click();
-  URL.revokeObjectURL(url);
+  window.open(`https://calendar.google.com/calendar/render?${params}`, "_blank");
 }
